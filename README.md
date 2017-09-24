@@ -42,13 +42,17 @@ Motion
   }
 }
 ```
+![things](https://raw.githubusercontent.com/daaru00/aws-iot-example/master/doc/aws-iot-things.png)
 
 For semplicity create all the things without creating a new certificate for each, then create a single certifiate and attach it to all things.
+
+![things](https://raw.githubusercontent.com/daaru00/aws-iot-example/master/doc/aws-iot-certificates.png)
 
 #### Create Rules
 
 For each sensor create a rule that take as input the sensor's value from the update/accepted topic and transform it into a CloudWatch metric.
 In actions section add an "Sends message data to CloudWatch" action, set the values as follow.
+![things](https://raw.githubusercontent.com/daaru00/aws-iot-example/master/doc/aws-iot-rules.png)
 
 Temperature
 * Rule query statement: `SELECT state.desired.celsius FROM '$aws/things/Temperature/shadow/update/accepted'`
@@ -71,6 +75,7 @@ Motion
 * Unit `None`
 * Value `${state.desired.active}`
 
+![things](https://raw.githubusercontent.com/daaru00/aws-iot-example/master/doc/aws-iot-rule-details.png)
 attach a new IAM role name with "create" button.
 
 #### Init Project
@@ -98,6 +103,7 @@ Every 5 seconds the example generate a random value for each sensor and push it 
 ### Show Metric
 
 Go to CloudWatch and select the custom metric create "Sensor/Temperature", "Sensor/Humidity" or "Sensor/Motion"
+![things](https://raw.githubusercontent.com/daaru00/aws-iot-example/master/doc/aws-cloudwatch-metrics.png)
 
 ### Code Specs
 
@@ -115,3 +121,4 @@ To enable client side debug set to `true` the debug variable in `.env` file
 DEBUG=true
 ```
 To enable debug on AWS side enable logging in `Settings` -> `CloudWatch Logs` to create a stream with the selected level on debugging.
+![things](https://raw.githubusercontent.com/daaru00/aws-iot-example/master/doc/aws-iot-logging.png)
