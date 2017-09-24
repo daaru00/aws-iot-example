@@ -1,0 +1,16 @@
+{
+  "name": "aws-iot-example",
+  "version": "1.0.0",
+  "description": "AWS Iot Sensors Example",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodejs index.js"
+  },
+  "author": "daaru00",
+  "license": "MIT",
+  "dependencies": {
+    "aws-iot-device-sdk": "^2.0.1",
+    "dotenv": "^4.0.0",
+    "winston": "^2.3.1"
+  }
+}
