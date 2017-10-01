@@ -4,13 +4,16 @@
   "description": "AWS Iot Sensors Example",
   "main": "index.js",
   "scripts": {
-    "start": "nodejs index.js"
+    "dht11": "nodejs ./tasks/dht11.js",
+    "motion": "nodejs ./tasks/motion.js",
+    "camera": "nodejs ./tasks/camera.js"
   },
   "author": "daaru00",
   "license": "MIT",
   "dependencies": {
     "aws-iot-device-sdk": "^2.0.1",
     "dotenv": "^4.0.0",
+    "node-cron": "^1.2.1",
     "winston": "^2.3.1"
   }
 }
