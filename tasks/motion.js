@@ -1,4 +1,3 @@
-const cron = require('node-cron');
 const config = require('../lib/config.js');
 
 const Motion = require("../devices/motion.js")
@@ -20,50 +19,36 @@ var motion = new Motion({
   "caCert": config.CA_CERT,
 }, config.HOST, config.DEBUG);
 
+var testValues = [
+  0,0,0,1,0,0,0,1
+]
 
 buzzer.connect(function(){
   motion.connect(function(){
-    /*
-    cron.schedule('* * * * * *', function(){
-      if(motion.enable){
-        var alarmState = Math.floor(Math.random() * 2);
+
+    function readTestValue(i){
+      if(i == testValues.length){
+        readTestValue(0)
+      }else{
+        var alarmState = testValues[i];
         motion.logger.info("reading "+alarmState);
         motion.isInAlarm = alarmState;
+        setTimeout(function(){
+          readTestValue(++i);
+        }, 1000)
       }
-    });*/
-    cron.schedule('*/10 * * * * *', function(){
-      if(motion.enable){
-        motion.isInAlarm = 0;
-        motion.logger.info(0);
-        setTimeout(function () {
-          motion.isInAlarm = 1;
-          motion.logger.info(1);
-          setTimeout(function () {
-            motion.isInAlarm = 0;
-            motion.logger.info(0);
-            setTimeout(function () {
-              motion.isInAlarm = 0;
-              motion.logger.info(0);
-              setTimeout(function () {
-                motion.isInAlarm = 0;
-                motion.logger.info(0);
-              }, 2000);
-            }, 2000);
-          }, 4000);
-        }, 2000);
-      }else{
-        motion.logger.info("disabled");
-      }
-    })
+    }
+    readTestValue(0);
+
   })
 
   motion.onActivated(function(){
     buzzer.logger.log('info', 'motion detected');
-    //buzzer.ring();
+    buzzer.ring(2000);
   })
   motion.onDeactivated(function(){
     buzzer.logger.log('info', 'no motion detected');
-    //buzzer.stopRing();
+    buzzer.stopRing();
   })
 
 })

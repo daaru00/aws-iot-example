@@ -6,7 +6,8 @@
   "scripts": {
     "dht11": "nodejs ./tasks/dht11.js",
     "motion": "nodejs ./tasks/motion.js",
-    "camera": "nodejs ./tasks/camera.js"
+    "camera": "nodejs ./tasks/camera.js",
+    "led": "nodejs ./tasks/led.js"
   },
   "author": "daaru00",
   "license": "MIT",

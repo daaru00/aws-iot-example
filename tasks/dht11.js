@@ -11,9 +11,9 @@ var dht11 = new DHT11({
 
 dht11.connect(function(){
   cron.schedule('* * * * * *', function(){
-    dht11.sensorValue = {
-      humidity: Math.round(Math.random() * (100 - 0) + 0),
-      temperature: Math.round(Math.random() * (40 - 0) + 0)
-    }
+    dht11.temperature = Math.round(Math.random() * (40 - 0) + 0);
+  });
+  cron.schedule('* * * * * *', function(){
+    dht11.humidity = Math.round(Math.random() * (100 - 0) + 0);
   });
 })
