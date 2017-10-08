@@ -7,10 +7,35 @@ module.exports = class Motion extends Thing{
     super("Motion", keysPaths, host, debug)
   }
 
-  set active(value){
-    this.update({
-      "active": value
-    })
+  set isInAlarm(value){
+    if(this.state.enable == 1){
+
+      if(value != this.state.isInAlarm){
+        if(value == 1){
+          this.send("motion-acivated");
+        }else{
+          this.send("motion-deacivated");
+        }
+      }
+      this.update({
+        "isInAlarm": value
+      })
+
+    }else{
+      this.logger.info("sensor disabled, value not updated");
+    }
+  }
+
+  get enable(){
+    return this.state.enable || 0;
+  }
+
+  onActivated(callback){
+    this.on("motion-acivated", callback)
+  }
+
+  onDeactivated(callback){
+    this.on("motion-deacivated", callback)
   }
 
 }
