@@ -9,11 +9,12 @@ var dht11 = new DHT11({
   "caCert": config.CA_CERT,
 }, config.HOST, config.DEBUG);
 
+
 dht11.connect(function(){
   cron.schedule('* * * * * *', function(){
-    dht11.temperature = Math.round(Math.random() * (40 - 0) + 0);
-  });
-  cron.schedule('* * * * * *', function(){
-    dht11.humidity = Math.round(Math.random() * (100 - 0) + 0);
+    dht11.values = {
+      temperature: Math.round(Math.random() * (40 - 0) + 0),
+      humidity: Math.round(Math.random() * (100 - 0) + 0),
+    }
   });
 })

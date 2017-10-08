@@ -7,15 +7,10 @@ module.exports = class DHT11 extends Thing{
     super("DHT11", keysPaths, host, debug)
   }
 
-  set humidity(value){
+  set values(value){
     this.update({
-      "humidity": value
-    })
-  }
-
-  set temperature(value){
-    this.update({
-      "temperature": value
+      "humidity": value.humidity,
+      "temperature": value.temperature
     })
   }
 
