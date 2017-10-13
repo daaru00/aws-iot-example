@@ -8,15 +8,13 @@ module.exports = class Buzzer extends Thing{
   }
 
   ring(timeout){
-    var self = this;
-    if(self.state.ringing == 0 || self.state.ringing == undefined){
-      self.send("buzzer-ring");
-      self.update({
-        "ringing": 1
+    if(this.state.ringing == 0 || this.state.ringing == undefined){
+      this.update({
+        "ringing": 0
       })
-      setTimeout(function(){
-        self.stopRing();
-      }, timeout)
+      this.send("buzzer-ring", {
+        timeout: timeout
+      });
     }
   }
 

@@ -4,6 +4,8 @@
   "description": "AWS Iot Sensors Example",
   "main": "index.js",
   "scripts": {
+    "button": "nodejs ./tasks/button.js",
+    "buzzer": "nodejs ./tasks/buzzer.js",
     "dht11": "nodejs ./tasks/dht11.js",
     "motion": "nodejs ./tasks/motion.js",
     "camera": "nodejs ./tasks/camera.js",
@@ -13,8 +15,13 @@
   "license": "MIT",
   "dependencies": {
     "aws-iot-device-sdk": "^2.0.1",
+    "bindings": "^1.3.0",
     "dotenv": "^4.0.0",
+    "epoll": "^0.1.22",
     "node-cron": "^1.2.1",
+    "node-webcam": "^0.4.3",
+    "onoff": "^1.1.7",
+    "s3": "^4.4.0",
     "winston": "^2.3.1"
   }
 }
