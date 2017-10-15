@@ -4,12 +4,12 @@
   "description": "AWS Iot Sensors Example",
   "main": "index.js",
   "scripts": {
-    "button": "nodejs ./tasks/button.js",
-    "buzzer": "nodejs ./tasks/buzzer.js",
-    "dht11": "nodejs ./tasks/dht11.js",
-    "motion": "nodejs ./tasks/motion.js",
-    "camera": "nodejs ./tasks/camera.js",
-    "led": "nodejs ./tasks/led.js"
+    "button": "node ./tasks/button.js",
+    "buzzer": "node ./tasks/buzzer.js",
+    "dht11": "node ./tasks/dht11.js",
+    "motion": "node ./tasks/motion.js",
+    "camera": "node ./tasks/camera.js",
+    "led": "node ./tasks/led.js"
   },
   "author": "daaru00",
   "license": "MIT",

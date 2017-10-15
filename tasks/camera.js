@@ -5,7 +5,7 @@ const NodeWebcam = require( "node-webcam" );
 const webcam = NodeWebcam.create({
   width: 800,
   height: 600,
-  quality: 50,
+  quality: 80,
 
   saveShots: false,
   output: "jpeg",
@@ -47,6 +47,7 @@ camera.connect(function(){
           s3Params: {
             Bucket: config.AS_S3_BUCKET,
             Key: path.basename(data),
+            ACL: "private"
           },
         });
         uploader.on('error', function(err) {
