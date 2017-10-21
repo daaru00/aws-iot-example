@@ -197,3 +197,20 @@ DEBUG=true
 ```
 To enable debug on AWS side enable logging in `Settings` -> `CloudWatch Logs` to create a stream with the selected level on debugging.
 ![things](https://raw.githubusercontent.com/daaru00/aws-iot-example/master/doc/aws-iot-logging.png)
+
+### PM2
+
+Using [PM2](http://pm2.keymetrics.io/) process manager you can use the `pm2.config.js` file as configuration
+```bash
+pm2 start ./pm2.config.js
+```
+
+the save the current configuration
+```bash
+pm2 save
+```
+
+and set the process starting on system startup
+```bash
+pm2 startup
+```
