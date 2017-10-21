@@ -14,9 +14,10 @@ module.exports = class Motion extends Thing{
         if(value == 1){
           this.send("motion-acivated");
         }else{
-          this.send("motion-deacivated");
+          this.send("motion-deactivated");
         }
       }
+      
       this.update({
         "isInAlarm": value
       })
@@ -24,6 +25,10 @@ module.exports = class Motion extends Thing{
     }else{
       this.logger.info("sensor disabled, value not updated");
     }
+  }
+
+  get isInAlarm(){
+    return this.state.isInAlarm || 0;
   }
 
   get enable(){
@@ -35,7 +40,7 @@ module.exports = class Motion extends Thing{
   }
 
   onDeactivated(callback){
-    this.on("motion-deacivated", callback)
+    this.on("motion-deactivated", callback)
   }
 
 }

@@ -14,19 +14,19 @@ var buzzer = new Buzzer({
 buzzer.connect(function(){
 
   buzzer.onRing(function(data){
-    buzzer.logger.log('info', 'buzzer ringing');
+    buzzer.logger.info('buzzer ringing');
     port.writeSync(1);
 
     if(data != undefined && typeof data.timeout == 'number'){
       setTimeout(function(){
-        buzzer.logger.log('info', 'buzzer stop ringing');
+        buzzer.logger.info('buzzer stop ringing');
         port.writeSync(1);
       }, data.timeout)
     }
   })
 
   buzzer.onStopRing(function(){
-    buzzer.logger.log('info', 'buzzer stop ringing');
+    buzzer.logger.info('buzzer stop ringing');
     port.writeSync(0);
   })
 

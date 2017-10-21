@@ -17,12 +17,12 @@ led.connect(function(){
 
   led.onSwitchOn(function(){
     port.writeSync(1);
-    led.logger.log('info', 'led on');
+    led.logger.info('led on');
   })
 
   led.onSwitchOff(function(){
     port.writeSync(0);
-    led.logger.log('info', 'led off');
+    led.logger.info('led off');
   })
 
 })

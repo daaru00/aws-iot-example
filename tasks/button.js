@@ -17,7 +17,7 @@ button.connect(function(){
       button.logger.error(err);
     }
     if(value == 1){
-      button.logger.log('info', 'button pressed');
+      button.logger.info('button pressed');
       button.click();
     }
   });

@@ -1,11 +1,12 @@
 const config = require('../lib/config.js');
 const path = require('path');
+const fs = require('fs');
 
 const NodeWebcam = require( "node-webcam" );
 const webcam = NodeWebcam.create({
   width: 800,
   height: 600,
-  quality: 80,
+  quality: 30,
 
   saveShots: false,
   output: "jpeg",
@@ -52,12 +53,14 @@ camera.connect(function(){
         });
         uploader.on('error', function(err) {
           camera.logger.error(err);
+          fs.unlinkSync(data);
         });
         uploader.on('progress', function() {
           camera.logger.debug("uploading "+uploader.progressAmount+" of "+uploader.progressTotal);
         });
         uploader.on('end', function() {
           camera.logger.info("photo uploaded");
+          fs.unlinkSync(data);
         });
       }
     });
