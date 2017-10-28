@@ -21,6 +21,7 @@
     "node-cron": "^1.2.1",
     "node-webcam": "^0.4.3",
     "onoff": "^1.1.7",
+    "parse-duration": "^0.1.1",
     "s3": "^4.4.0",
     "winston": "^2.3.1"
   }

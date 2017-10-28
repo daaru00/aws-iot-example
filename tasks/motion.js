@@ -1,5 +1,6 @@
 const config = require('../lib/config.js');
-const debounceDelay = 1000 * 20;
+const duration = require('parse-duration');
+const debounceDelay = duration(config.MOTION_DEBOUNCE_DELAY);
 
 const Gpio = require('onoff').Gpio;
 const port = new Gpio(config.GPIO_MOTION, 'in', 'both');
