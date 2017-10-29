@@ -223,7 +223,7 @@ pm2 startup
 ### RaspberryPI configuration
 
 Electronic Schema
-![things](https://raw.githubusercontent.com/daaru00/aws-iot-example/master/doc/raspberrypi-schema.png)
+![schema](https://raw.githubusercontent.com/daaru00/aws-iot-example/master/doc/raspberrypi-schema.png)
 
 Set GPIO port of the sensors
 ```
