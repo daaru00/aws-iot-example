@@ -31,6 +31,8 @@ modem.connect(function(){
 
   });
 
+  const threshold = 3;
+  var failCount = 0;
   cron.schedule('*/10 * * * * *', function(){
 
     var host = config.ADMIN_PHONE_HOST;
@@ -40,8 +42,12 @@ modem.connect(function(){
 
         if(isAlive){
           modem.isAminConnected = 1;
+          failCount = 0;
         }else{
-          modem.isAminConnected = 0;
+          failCount++;
+          if(failCount > threshold){
+            modem.isAminConnected = 0;
+          }
         }
     });
 
