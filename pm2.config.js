@@ -20,5 +20,9 @@ module.exports = {
         name: "led",
         script: "./tasks/led.js"
       },
+      {
+        name: "buzzer",
+        script: "./tasks/buzzer.js"
+      },
   ]
 }

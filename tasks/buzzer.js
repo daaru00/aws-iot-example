@@ -17,10 +17,17 @@ buzzer.connect(function(){
     buzzer.logger.info('buzzer ringing');
     port.writeSync(1);
 
+    var value = 1;
+    var ringing = setInterval(function(){
+      port.writeSync(value);
+      value = value == 1 ? 0 : 1;
+    }, 100);
+
     if(data != undefined && typeof data.timeout == 'number'){
       setTimeout(function(){
         buzzer.logger.info('buzzer stop ringing');
-        port.writeSync(1);
+        port.writeSync(0);
+        clearInterval(ringing);
       }, data.timeout)
     }
   })
