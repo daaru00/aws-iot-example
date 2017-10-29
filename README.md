@@ -198,6 +198,11 @@ DEBUG=true
 To enable debug on AWS side enable logging in `Settings` -> `CloudWatch Logs` to create a stream with the selected level on debugging.
 ![things](https://raw.githubusercontent.com/daaru00/aws-iot-example/master/doc/aws-iot-logging.png)
 
+Install gpio utility on RaspberryPI
+```
+sudo apt install -y wiringpi
+```
+
 ### PM2
 
 Using [PM2](http://pm2.keymetrics.io/) process manager you can use the `pm2.config.js` file as configuration
@@ -217,13 +222,16 @@ pm2 startup
 
 ### RaspberryPI configuration
 
+Electronic Schema
+![things](https://raw.githubusercontent.com/daaru00/aws-iot-example/master/doc/raspberrypi-schema.png)
+
 Set GPIO port of the sensors
 ```
-GPIO_BUTTON=
-GPIO_BUZZER=
-GPIO_DHT11=
-GPIO_LED=
-GPIO_MOTION=
+GPIO_BUTTON=27
+GPIO_BUZZER=23
+GPIO_DHT11=18
+GPIO_LED=17
+GPIO_MOTION=22
 ```
 
 Install  library for DHT11 sensor
@@ -240,7 +248,23 @@ cd ..
 rm -rf bcm2835-1.52
 ```
 
-Install gpio utility
+Install NodeJS, npm and git
 ```
-sudo apt install -y wiringpi
+sudo apt install nodejs nodejs-legacy npm git
+```
+
+Clone this repo from the inside of RaspberryPI
+```bash
+git clone https://github.com/daaru00/aws-iot-example.git
+cd aws-iot-example
+```
+
+Install all npm dependencies
+```bash
+npm install
+```
+
+Install the additional `node-dht-sensor` module
+```bash
+npm install node-dht-sensor
 ```
