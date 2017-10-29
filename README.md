@@ -214,3 +214,33 @@ and set the process starting on system startup
 ```bash
 pm2 startup
 ```
+
+### RaspberryPI configuration
+
+Set GPIO port of the sensors
+```
+GPIO_BUTTON=
+GPIO_BUZZER=
+GPIO_DHT11=
+GPIO_LED=
+GPIO_MOTION=
+```
+
+Install  library for DHT11 sensor
+```
+cd /tmp/
+wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.52.tar.gz
+tar zxvf bcm2835-1.52.tar.gz
+rm zxvf bcm2835-1.52.tar.gz
+cd bcm2835-1.52
+./configure
+make
+sudo make install
+cd ..
+rm -rf bcm2835-1.52
+```
+
+Install gpio utility
+```
+sudo apt install -y wiringpi
+```
