@@ -1,62 +1,50 @@
 const config = require('../lib/config.js');
+const duration = require('parse-duration');
+const debounceDelay = duration(config.MOTION_DEBOUNCE_DELAY);
+
+const Gpio = require('onoff').Gpio;
+const port = new Gpio(config.GPIO_MOTION, 'in', 'both');
 
 const Motion = require("../devices/motion.js")
-const Buzzer = require("../devices/buzzer")
-
-// Buzzer
-
-var buzzer = new Buzzer({
-  "privateKey": config.PRIVATE_KEY,
-  "clientCert": config.CLIENT_CERT,
-  "caCert": config.CA_CERT,
-}, config.HOST, config.DEBUG);
-
-// Motion sensor
-
 var motion = new Motion({
   "privateKey": config.PRIVATE_KEY,
   "clientCert": config.CLIENT_CERT,
   "caCert": config.CA_CERT,
 }, config.HOST, config.DEBUG);
 
-var testValues = [
-  0,0,0,1,0,0,0,1
-]
+var timeout = null;
 
-buzzer.connect(function(){
-  motion.connect(function(){
+function stopAlarm(){
+  motion.logger.info('motion not yet in alarm, notifing');
+  motion.isInAlarm = 0;
+}
 
-    function readTestValue(i){
-      if(i == testValues.length){
-        readTestValue(0)
-      }else{
-        var alarmState = testValues[i];
-        motion.logger.info("reading "+alarmState);
-        motion.isInAlarm = alarmState;
-        setTimeout(function(){
-          readTestValue(++i);
-        }, 1000)
+motion.connect(function(){
+
+  port.watch(function (err, value) {
+    if (err) {
+      motion.logger.error(err);
+    }else{
+      value = parseInt(value);
+      if(value == 1){
+        if(motion.isInAlarm == 1){
+          motion.logger.info('motion already in alarm');
+        }else{
+          motion.logger.info('motion in alarm, notifing');
+          motion.isInAlarm = 1;
+        }
+        if(timeout != null) clearTimeout(timeout);
+        timeout = setTimeout(stopAlarm, debounceDelay);
       }
     }
-    readTestValue(0);
 
-  })
-
-  motion.onActivated(function(){
-    buzzer.logger.log('info', 'motion detected');
-    buzzer.ring(2000);
-  })
-  motion.onDeactivated(function(){
-    buzzer.logger.log('info', 'no motion detected');
-    buzzer.stopRing();
-  })
+  });
 
 })
 
-buzzer.onRing(function(){
-  buzzer.logger.log('info', 'ringing');
+motion.onActivated(function(){
+  motion.logger.info('motion detected');
 })
-
-buzzer.onStopRing(function(){
-  buzzer.logger.log('info', 'stop ringing');
+motion.onDeactivated(function(){
+  motion.logger.info('no motion detected');
 })

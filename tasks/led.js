@@ -1,6 +1,9 @@
 const cron = require('node-cron');
 const config = require('../lib/config.js');
 
+const Gpio = require('onoff').Gpio;
+const port = new Gpio(config.GPIO_LED, 'out');
+
 const Led = require("../devices/led.js")
 
 var led = new Led({
@@ -9,14 +12,17 @@ var led = new Led({
   "caCert": config.CA_CERT,
 }, config.HOST, config.DEBUG);
 
+
 led.connect(function(){
 
   led.onSwitchOn(function(){
-    led.logger.log('info', 'led on');
+    port.writeSync(1);
+    led.logger.info('led on');
   })
 
   led.onSwitchOff(function(){
-    led.logger.log('info', 'led off');
+    port.writeSync(0);
+    led.logger.info('led off');
   })
 
 })
