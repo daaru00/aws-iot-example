@@ -24,5 +24,9 @@ module.exports = {
         name: "buzzer",
         script: "./tasks/buzzer.js"
       },
+      {
+        name: "modem",
+        script: "./tasks/modem.js"
+      }
   ]
 }
