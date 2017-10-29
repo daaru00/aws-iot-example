@@ -220,6 +220,9 @@ and set the process starting on system startup
 pm2 startup
 ```
 
+Process are now up and running
+![pm2-process](https://raw.githubusercontent.com/daaru00/aws-iot-example/master/doc/pm2-process.png)
+
 ### RaspberryPI configuration
 
 Electronic Schema
