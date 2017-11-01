@@ -48,3 +48,8 @@ motion.onActivated(function(){
 motion.onDeactivated(function(){
   motion.logger.info('no motion detected');
 })
+motion.onEnableChange(function(enable){
+  if(enable == false && motion.isInAlarm){
+      stopAlarm();
+  }
+})

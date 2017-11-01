@@ -43,4 +43,12 @@ module.exports = class Motion extends Thing{
     this.on("motion-deactivated", callback)
   }
 
+  onEnableChange(callback){
+    this.onChange(function(data){
+      if(data.enable != undefined){
+        callback(data.enable);
+      }
+    })
+  }
+
 }
