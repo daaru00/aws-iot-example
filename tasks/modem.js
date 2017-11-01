@@ -32,23 +32,27 @@ modem.connect(function(){
   });
 
   const threshold = 3;
+  const host = config.ADMIN_PHONE_HOST;
   var failCount = 0;
   cron.schedule('*/10 * * * * *', function(){
-
-    var host = config.ADMIN_PHONE_HOST;
+    
     ping.sys.probe(host, function(isAlive){
-        var msg = isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead';
-        modem.logger.info(msg);
+        modem.logger.debug(isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' not reachable');
 
         if(isAlive){
           modem.isAminConnected = 1;
           failCount = 0;
         }else{
-          failCount++;
           if(failCount > threshold){
             modem.isAminConnected = 0;
+            modem.logger.info('admin host not found, fail count: '+failCount.toString());
+          }else{
+            modem.logger.info('admin host not reachable');
+            failCount++;
           }
         }
+    },{
+      timeout: 10
     });
 
   });
