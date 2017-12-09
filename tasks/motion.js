@@ -26,7 +26,7 @@ motion.connect(function(){
       motion.logger.error(err);
     }else{
       value = parseInt(value);
-      if(value == 1){
+      if(value == 1 && motion.enable == 1){
         if(motion.isInAlarm == 1){
           motion.logger.info('motion already in alarm');
         }else{
@@ -35,6 +35,9 @@ motion.connect(function(){
         }
         if(timeout != null) clearTimeout(timeout);
         timeout = setTimeout(stopAlarm, debounceDelay);
+      }else{
+        motion.logger.debug('motion status:',value);
+        motion.logger.debug('motion enable:',motion.enable);
       }
     }
 
@@ -49,7 +52,9 @@ motion.onDeactivated(function(){
   motion.logger.info('no motion detected');
 })
 motion.onEnableChange(function(enable){
-  if(enable == false && motion.isInAlarm){
-      stopAlarm();
+  motion.logger.info('motion enable changed to:', enable);
+  if(enable == 0){
+    if(timeout != null) clearTimeout(timeout);
+    stopAlarm();
   }
 })

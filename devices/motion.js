@@ -8,22 +8,15 @@ module.exports = class Motion extends Thing{
   }
 
   set isInAlarm(value){
-    if(this.state.enable == 1){
-
-      if(value != this.state.isInAlarm){
-        if(value == 1){
-          this.send("motion-acivated");
-        }else{
-          this.send("motion-deactivated");
-        }
+    if(value != this.state.isInAlarm){
+      if(value == 1){
+        this.send("motion-acivated");
+      }else{
+        this.send("motion-deactivated");
       }
-      
       this.update({
         "isInAlarm": value
       })
-
-    }else{
-      this.logger.info("sensor disabled, value not updated");
     }
   }
 
@@ -44,6 +37,7 @@ module.exports = class Motion extends Thing{
   }
 
   onEnableChange(callback){
+    var self = this;
     this.onChange(function(data){
       if(data.enable != undefined){
         callback(data.enable);
