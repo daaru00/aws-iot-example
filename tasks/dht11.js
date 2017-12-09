@@ -13,7 +13,7 @@ var dht11 = new DHT11({
 
 
 dht11.connect(function(){
-  cron.schedule('*/5 * * * * *', function(){
+  cron.schedule('* * * * *', function(){
     sensor.read(sensorType, config.GPIO_DHT11, function(err, temperature, humidity) {
       if (!err) {
 
