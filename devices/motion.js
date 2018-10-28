@@ -44,4 +44,8 @@ module.exports = class Motion extends Thing{
     this.on("motion-deactivated", callback)
   }
 
+  onGoogleHomeAction(callback){
+    this.on("motion-action", callback)
+  }
+
 }

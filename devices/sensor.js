@@ -13,6 +13,12 @@ module.exports = class Sensor extends Thing{
       "temperature": value.temperature
     })
   }
+  
+  set mode(value){
+    this.update({
+      "mode": value,
+    })
+  }
 
   get humidity(){
     return this.state.humidity || 0;
@@ -20,5 +26,13 @@ module.exports = class Sensor extends Thing{
 
   get temperature(){
     return this.state.temperature || 0;
+  }
+
+  onGoogleHomeActionMode(callback){
+    this.on("sensor-set-mode", callback)
+  }
+
+  onGoogleHomeActionSetPoint(callback){
+    this.on("sensor-temperature-set-point", callback)
   }
 }

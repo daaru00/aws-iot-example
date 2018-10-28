@@ -11,11 +11,11 @@ const notifier = require('../lib/google-home-notifier');
 
 const miHome = require("../lib/mi-home.js");
 miHome.load({
-  door: {
+  gateway: {
     id: config.MIHOME_GATEWAY,
     token: config.MIHOME_TOKEN
   },
-}, {motion: () => {
+}, {door: () => {
   doorSensor.connect(function () {
 
     miHome.devices.door.isOpen().then((value) => {
@@ -23,16 +23,22 @@ miHome.load({
     })
 
     miHome.devices.door.on('contactDetectedChanged', (value) => {
-      doorSensor.isOpen = value == true ? 1 : 0;
+      console.log('contactDetectedChanged', value)
+      doorSensor.isOpen = value == true ? 0 : 1;
+    });
+
+    miHome.devices.door.on('opened', () => {
+      console.log('opened')
+      doorSensor.isOpen = 1;
     });
 
   })
 
   doorSensor.onOpened(function () {
-    motion.logger.info('door opened');
+    doorSensor.logger.info('door opened');
     notifier(config.GOOGLEHOME_HOST, config.GOOGLEHOME_LANG).notify(config.GOOGLEHOME_DOOR_MESSAGE)
   })
   doorSensor.onClosed(function () {
-    motion.logger.info('door cosed');
+    doorSensor.logger.info('door cosed');
   })
 }});

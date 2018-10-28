@@ -31,12 +31,6 @@ led.connect(function () {
   }else{
     portYellow.writeSync(0);
   }
-  
-  if (hubLight.active !== currentState) {
-    if (hubLight.active) miHome.devices.light.power(true)
-    else  miHome.devices.light.power(false)
-    hubLight.active = currentState;
-  }
 
   led.onSwitchOnRed(function () {
     portRed.writeSync(1);

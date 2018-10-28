@@ -4,7 +4,7 @@ const Thing = require("../lib/thing.js")
 
 module.exports = class HUBLight extends Thing{
   constructor(keysPaths, host, debug){
-    super("Hub", keysPaths, host, debug)
+    super("HUB", keysPaths, host, debug)
   }
 
   get active(){

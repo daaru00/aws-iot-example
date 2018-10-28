@@ -46,7 +46,7 @@ miHome.load({
 
 
   motion.onGoogleHomeAction(function (params) {
-    motor.logger.info('Received command from Google:', params);
+    motion.logger.info('Received command from Google:', params);
     motion.enabled = params.on == true ? 1 : 0;
   })
 

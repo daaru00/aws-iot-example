@@ -27,4 +27,8 @@ module.exports = class Plug extends Thing{
     })
   }
 
+  onGoogleHomeAction(callback){
+    this.on("plug-action", callback)
+  }
+
 }
