@@ -37,4 +37,14 @@ buzzer.connect(function(){
     port.writeSync(0);
   })
 
+
+  buzzer.onGoogleHomeAction(function (params) {
+    buzzer.logger.info('Received command from Google:', params);
+    if (params.on == true) {
+      buzzer.ring();
+    }else{
+      buzzer.stopRing();
+    }
+  })
+
 })

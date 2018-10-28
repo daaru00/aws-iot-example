@@ -20,12 +20,20 @@ module.exports = class Motion extends Thing{
     }
   }
 
+  set enabled(value){
+    if(value != this.state.enabled){
+      this.update({
+        "enabled": value
+      })
+    }
+  }
+
   get isInAlarm(){
     return this.state.isInAlarm || 0;
   }
 
-  get enable(){
-    return this.state.enable || 0;
+  get enabled(){
+    return this.state.enabled || 0;
   }
 
   onActivated(callback){
@@ -34,15 +42,6 @@ module.exports = class Motion extends Thing{
 
   onDeactivated(callback){
     this.on("motion-deactivated", callback)
-  }
-
-  onEnableChange(callback){
-    var self = this;
-    this.onChange(function(data){
-      if(data.enable != undefined){
-        callback(data.enable);
-      }
-    })
   }
 
 }

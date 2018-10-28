@@ -35,4 +35,8 @@ module.exports = class Buzzer extends Thing{
     this.on("buzzer-stop-ring", callback)
   }
 
+  onGoogleHomeAction(callback){
+    this.on("buzzer-action", callback)
+  }
+
 }

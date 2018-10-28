@@ -2,7 +2,7 @@
 
 const Thing = require("../lib/thing.js")
 
-module.exports = class DHT11 extends Thing{
+module.exports = class Sensor extends Thing{
   constructor(keysPaths, host, debug){
     super("DHT11", keysPaths, host, debug)
   }

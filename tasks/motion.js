@@ -1,9 +1,4 @@
 const config = require('../lib/config.js');
-const duration = require('parse-duration');
-const debounceDelay = duration(config.MOTION_DEBOUNCE_DELAY);
-
-const Gpio = require('onoff').Gpio;
-const port = new Gpio(config.GPIO_MOTION, 'in', 'both');
 
 const Motion = require("../devices/motion.js")
 var motion = new Motion({
@@ -12,49 +7,47 @@ var motion = new Motion({
   "caCert": config.CA_CERT,
 }, config.HOST, config.DEBUG);
 
-var timeout = null;
+const notifier = require('../lib/google-home-notifier');
 
-function stopAlarm(){
-  motion.logger.info('motion not yet in alarm, notifing');
-  motion.isInAlarm = 0;
-}
+const miHome = require("../lib/mi-home.js");
+miHome.load({
+  gateway: {
+    id: config.MIHOME_GATEWAY,
+    token: config.MIHOME_TOKEN
+  },
+}, {motion: () => {
+  motion.connect(function () {
 
-motion.connect(function(){
+    miHome.devices.motion.state().then((initialState) => {
+      motion.isInAlarm = initialState.motion == true ? 1 : 0;
+    })
 
-  port.watch(function (err, value) {
-    if (err) {
-      motion.logger.error(err);
-    }else{
-      value = parseInt(value);
-      if(value == 1 && motion.enable == 1){
-        if(motion.isInAlarm == 1){
-          motion.logger.info('motion already in alarm');
-        }else{
-          motion.logger.info('motion in alarm, notifing');
-          motion.isInAlarm = 1;
-        }
-        if(timeout != null) clearTimeout(timeout);
-        timeout = setTimeout(stopAlarm, debounceDelay);
-      }else{
-        motion.logger.debug('motion status:',value);
-        motion.logger.debug('motion enable:',motion.enable);
-      }
-    }
+    miHome.devices.motion.on('movement', () => {
+      if (motion.enabled == 0) return;
+      motion.isInAlarm = 1;
+    });
 
-  });
+    miHome.devices.motion.on('inactivity', () => {
+      if (motion.enabled == 0) return;
+      motion.isInAlarm = 0;
+    });
 
-})
+  })
 
-motion.onActivated(function(){
-  motion.logger.info('motion detected');
-})
-motion.onDeactivated(function(){
-  motion.logger.info('no motion detected');
-})
-motion.onEnableChange(function(enable){
-  motion.logger.info('motion enable changed to:', enable);
-  if(enable == 0){
-    if(timeout != null) clearTimeout(timeout);
-    stopAlarm();
-  }
-})
+  motion.onActivated(function () {
+    motion.logger.info('motion detected');
+    notifier(config.GOOGLEHOME_HOST, config.GOOGLEHOME_LANG).notify(config.GOOGLEHOME_ALARM_MESSAGE)
+  })
+
+  motion.onDeactivated(function () {
+    motion.logger.info('no motion detected');
+    notifier(config.GOOGLEHOME_HOST, config.GOOGLEHOME_LANG).notify(config.GOOGLEHOME_NOALARM_MESSAGE)
+  })
+
+
+  motion.onGoogleHomeAction(function (params) {
+    motor.logger.info('Received command from Google:', params);
+    motion.enabled = params.on == true ? 1 : 0;
+  })
+
+}});

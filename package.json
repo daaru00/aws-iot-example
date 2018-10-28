@@ -1,24 +1,24 @@
 {
-  "name": "aws-iot-example",
+  "name": "xiaomi-suite",
   "version": "1.0.0",
-  "description": "AWS Iot Sensors Example",
+  "description": "Xiaomi IoT suite",
   "main": "index.js",
   "scripts": {
-    "button": "node ./tasks/button.js",
-    "buzzer": "node ./tasks/buzzer.js",
-    "dht11": "node ./tasks/dht11.js",
+    "hubLight": "node ./tasks/hubLight.js",
     "motion": "node ./tasks/motion.js",
-    "camera": "node ./tasks/camera.js",
-    "led": "node ./tasks/led.js",
-    "modem": "node ./tasks/modem.js"
+    "sensor": "node ./tasks/sensor.js",
+    "plug": "node ./tasks/plug.js"
   },
   "author": "daaru00",
   "license": "MIT",
   "dependencies": {
     "aws-iot-device-sdk": "^2.2.1",
     "bindings": "^1.3.0",
+    "castv2-client": "^1.2.0",
     "dotenv": "^4.0.0",
     "epoll": "^0.1.22",
+    "google-tts-api": "0.0.3",
+    "miio": "^0.15.6",
     "node-cron": "^1.2.1",
     "node-webcam": "^0.4.3",
     "onoff": "^1.2.0",
