@@ -69,7 +69,7 @@ For semplicity create all the things without creating a new certificate for each
 
 ![things](https://raw.githubusercontent.com/daaru00/aws-iot-example/master/doc/aws-iot-certificates.png)
 
-Use `Security -> Certificates` menu to create new one and edit connected things, remember to download all the keys including "root CA" using [download link](https://www.symantec.com/content/en/us/enterprise/verisign/roots/VeriSign-Class%203-Public-Primary-Certification-Authority-G5.pem).
+Use `Security -> Certificates` menu to create new one and edit connected things, remember to download all the keys including [Amazon Root CA](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html#server-authentication-certs).
 
 ![things](https://raw.githubusercontent.com/daaru00/aws-iot-example/master/doc/aws-iot-certificate-create.png)
 
